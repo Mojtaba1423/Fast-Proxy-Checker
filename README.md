@@ -1,2 +1,13 @@
 # Fast-Proxy-Checker
- High-performance PowerShell automation tools. Specialized in network connectivity testing, proxy validation, and system administration scripts. Built for speed, reliability, and minimal resource usage. Available for freelance scripting and automation projects.
+
+A high-performance PowerShell script for testing proxy server connectivity and latency. Designed for reliability and speed.
+
+## Features
+- Fast connection testing (multi-threaded approach).
+- Customizable timeout and retry settings.
+- Lightweight, no external dependencies.
+
+## Usage
+Simply run the script with your proxy list:
+```powershell
+.\Check-Proxy.ps1 -ProxyList .\proxies.txt
