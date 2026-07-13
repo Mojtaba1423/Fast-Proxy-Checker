@@ -100,4 +100,4 @@ Tested with PowerShell 7 on Windows.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT (License).
