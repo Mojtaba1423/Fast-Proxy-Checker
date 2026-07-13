@@ -1,13 +1,15 @@
 # Fast-Proxy-Checker
 
-A high-performance PowerShell script for testing proxy server connectivity and latency. Designed for reliability and speed.
+A high-performance PowerShell 7+ script for testing proxy server connectivity and latency. Designed for reliability, speed, and automation workflows.
 
 ## Features
-- Fast connection testing (multi-threaded approach).
-- Customizable timeout and retry settings.
-- Lightweight, no external dependencies.
+- **Parallel Processing**: Uses `ForEach-Object -Parallel` for lightning-fast testing.
+- **Detailed Metrics**: Reports status, latency (ms), and server headers.
+- **Secure**: Supports environment variables for sensitive credentials.
+- **Lightweight**: No external dependencies; built on `.NET HttpClient`.
 
 ## Usage
-Simply run the script with your proxy list:
+1. Prepare your `hosts.txt` file.
+2. Run the script:
 ```powershell
-.\Check-Proxy.ps1 -ProxyList .\proxies.txt
+.\Check-Proxy.ps1
