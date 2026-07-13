@@ -1,430 +1,103 @@
-**Fast-Proxy-Checker**
+# Fast Proxy Checker
 
-> A high-performance tool for checking the validity of a large list of
-> proxy servers.
->
-> **Features**
->
-> • **Fast and Efficient:** Optimized for speed to process thousands of
-> proxies quickly.
->
-> • **Multiple Protocols:** Supports HTTP, HTTPS, and SOCKS proxies.•
-> **Customizable Timeout:** Set your desired timeout for each proxy
-> check.
->
-> **Concurrent Checks:** Utilizes multi-threading for parallel proxy
-> validation.•\
-> • **Clear Output:** Generates a CSV file with valid proxies and their
-> details.
->
-> • **Environment Variable Authentication:** Securely manage API keys or
-> credentials.
->
-> **Requirements**
->
-> • Python 3.7+
+A fast PowerShell-based HTTP proxy checker with parallel testing, authentication support, timeout handling, and CSV export.
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th style="text-align: left;"><blockquote>
-<p>requests library</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">•</td>
-<td style="text-align: left;"><blockquote>
-<p>multiprocessing (built-in)</p>
-</blockquote></td>
-</tr>
-</tbody>
-</table>
+## Features
 
-> **Installation**
->
-> 1\. **Clone the repository:**bash git clone https://github.com/
->
-> your_username/Fast-Proxy-Checker.git cd Fast-Proxy-
+- Tests multiple HTTP proxies in parallel
+- Supports username and password authentication
+- Measures connection time and download speed
+- Handles failed and timed-out proxies
+- Sorts successful proxies by performance
+- Exports detailed results to CSV
+- Ignores empty lines and comments in the hosts file
+- Designed for PowerShell 7+
 
-| Checker |
-|---------|
+## Requirements
 
-> 2\. **Install dependencies:**bash pip install -r requirements.txt
->
-> **Proxy List Format (hosts.txt)**
->
-> Create a file named hosts.txt in the root directory of the project.
-> Each line should contain a proxy in the following format:
+- PowerShell 7 or newer
+- curl.exe
+- A hosts.txt file containing proxy IP addresses
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>&lt;ip_address&gt;:&lt;port&gt;</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Installation
 
-> For SOCKS proxies, you can optionally specify the protocol:
+Clone the repository:
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>socks4://&lt;ip_address&gt;:&lt;port&gt;</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+git clone https://github.com/USERNAME/Fast-Proxy-Checker.git
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>socks5://&lt;ip_address&gt;:&lt;port&gt;</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+Enter the project directory:
 
-> **Usage**
->
-> Run the script from your terminal:
+cd Fast-Proxy-Checker
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>python proxy_checker.py --file hosts.txt --output valid_proxies.csv
---</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Proxy List
 
-> **Arguments:**
+Add one proxy IP address per line to hosts.txt:
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th style="text-align: left;"><blockquote>
-<p>--file (required): Path to the proxy list file (e.g., hosts.txt).</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">•</td>
-<td style="text-align: left;"><blockquote>
-<p>--output (required): Path to the output CSV file for valid proxies
-(e.g.,</p>
-</blockquote></td>
-</tr>
-</tbody>
-</table>
+104.254.90.218
+89.47.234.42
+91.198.123.2
 
-> valid_proxies.csv).
+Empty lines and lines beginning with # are ignored.
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th style="text-align: left;"><blockquote>
-<p>--timeout (optional): Timeout in seconds for each proxy check.</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Authentication
 
-> Defaults to 10.
+Set your proxy credentials before running the script:
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th style="text-align: left;"><blockquote>
-<p>--threads (optional): Number of concurrent threads to use. Defaults
-to</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+$env:PROXY_USER = "your_username"
+$env:PROXY_PASS = "your_password"
 
-> 10\.
+These variables remain active only in the current PowerShell session.
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th style="text-align: left;"><blockquote>
-<p>--url (optional): A target URL to test proxy connectivity. Defaults
-to</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Usage
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>https://httpbin.org/ip.</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+Run the script:
 
-> **Authentication via Env Vars**
->
-> Some proxy services might require authentication (e.g., API keys). You
-> can set these as environment variables. For example, if a proxy
-> requires an API key, you might set an environment variable like:
+.\Test-Proxies.ps1
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>export PROXY_API_KEY="your_api_key_here"</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+The script tests every proxy listed in hosts.txt.
 
-> The script can then access this variable using\
-> os.environ.get('PROXY_API_KEY'). Refer to the script's code for
-> specific environment variable names used.
->
-> **Output (csv)**
->
-> The script will generate a CSV file specified by the --output
-> argument. The file will contain lines for each valid proxy, with
-> columns such as:
+## Output
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: right;">•</th>
-<th><table style="width:65%;">
-<colgroup>
-<col style="width: 65%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: center;">ip_address</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">•</td>
-<td><table style="width:65%;">
-<colgroup>
-<col style="width: 65%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: center;">port</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table></td>
-</tr>
-<tr>
-<td style="text-align: right;">•</td>
-<td><table style="width:65%;">
-<colgroup>
-<col style="width: 65%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: center;">protocol</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table></td>
-</tr>
-<tr>
-<td style="text-align: right;">•</td>
-<td style="text-align: left;"><blockquote>
-<p>response_time (in seconds)</p>
-</blockquote></td>
-</tr>
-</tbody>
-</table>
+Results are displayed in the terminal and saved to:
 
-> **Security Notes**
->
-> • **Never share your proxy credentials or API keys publicly.**
->
-> • **Be mindful of the proxies you check.** Some public proxies may be
-> malicious or used for illicit activities.
->
-> • **The url argument:** Using a reliable and known URL is recommended
-> for testing. Avoid testing against sensitive or private endpoints.
->
-> **Project Structure**
+proxy-results.csv
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>.</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+The output includes:
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>├── proxy_checker.py</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+- Proxy host
+- Proxy port
+- HTTP status code
+- Connection time
+- Total request time
+- Download speed
+- Test result
+- Error details
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>├── hosts.txt # Example proxy list</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Configuration
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>├── requirements.txt</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+You can change these settings inside the script:
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>├── README.md</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+$ProxyPort = 3128
+$MaxParallel = 10
+$ConnectTimeout = 4
+$MaxTime = 10
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"><blockquote>
-<p>└── output.csv # Example output file</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+## Security
 
-> **License**
->
-> This project is licensed under the [MIT License](LICENSE).
+Never store real usernames or passwords directly in the script.
+
+Do not commit credentials, result files, or private configuration files to GitHub.
+
+Recommended .gitignore entries:
+
+proxy-results.csv
+*.log
+.env
+
+## Compatibility
+
+Tested with PowerShell 7 on Windows.
+
+## License
+
+This project is licensed under the MIT License.

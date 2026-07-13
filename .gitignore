@@ -1,2 +1,9 @@
+# Private proxy list
 hosts.txt
+
+# Generated results
 proxy-results.csv
+
+# Environment and log files
+.env
+*.log
